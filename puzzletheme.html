@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Solver</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('8.jpg');
+            background-size:cover ; /* Ensures the background image covers the entire viewport */
+            background-position: center; /* Centers the background image */
+            background-repeat: no-repeat; /* Prevents the background image from repeating */
+            margin: 0;
+            padding: 0;
+
+        }
+        table {
+            border-collapse: collapse;
+            margin: 20px auto;
+            border-color: black;
+        }
+        td {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            text-align: center;
+            font-size: 16px;
+            background-color: transparent;
+        }
+        .given-number {
+            font-weight: bold;
+        }
+        .solved-number {
+            color: #333;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sudoku Solver</h1>
+    <table id="sudoku-board"></table>
+   
+    <button onclick="generateNew()">Generate New Puzzle</button>
+    <button onclick="validateAndSolve()">Solve Puzzle</button>
+
+    <script>
+        let puzzle = [];
+
+        // Function to generate a new random Sudoku puzzle
+        function generateNew() {
+            puzzle = generateRandomPuzzle();
+            displayBoard(puzzle);
+        }
+
+        // Function to generate a random Sudoku puzzle
+        function generateRandomPuzzle() {
+            const puzzle = [];
+            for (let i = 0; i < 9; i++) {
+                const row = [];
+                for (let j = 0; j < 9; j++) {
+                    row.push(0);
+                }
+                puzzle.push(row);
+            }
+            // Populate a few random cells with valid values
+            for (let i = 0; i < 20; i++) {
+                const row = Math.floor(Math.random() * 9);
+                const col = Math.floor(Math.random() * 9);
+                const num = Math.floor(Math.random() * 9) + 1;
+                if (isValid(puzzle, row, col, num)) {
+                    puzzle[row][col] = num;
+                }
+            }
+            return puzzle;
+        }
+
+        // Function to check if a value can be placed in a cell
+        function isValid(puzzle, row, col, num) {
+            // Check row
+            for (let i = 0; i < 9; i++) {
+                if (puzzle[row][i] === num) {
+                    return false;
+                }
+            }
+            // Check column
+            for (let i = 0; i < 9; i++) {
+                if (puzzle[i][col] === num) {
+                    return false;
+                }
+            }
+            // Check 3x3 box
+            const boxRow = Math.floor(row / 3) * 3;
+            const boxCol = Math.floor(col / 3) * 3;
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if (puzzle[boxRow + i][boxCol + j] === num) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+       
+
+        // Function to solve Sudoku using backtracking algorithm
+        function solvePuzzle() {
+            const copyPuzzle = JSON.parse(JSON.stringify(puzzle));
+            if (solveSudoku(copyPuzzle)) {
+                displayBoard(copyPuzzle, true);
+            } else {
+                alert("No solution exists for the current puzzle.");
+            }
+        }
+
+        // Recursive function to solve Sudoku puzzle
+        function solveSudoku(puzzle) {
+            for (let row = 0; row < 9; row++) {
+                for (let col = 0; col < 9; col++) {
+                    if (puzzle[row][col] === 0) {
+                        for (let num = 1; num <= 9; num++) {
+                            if (isValid(puzzle, row, col, num)) {
+                                puzzle[row][col] = num;
+                                if (solveSudoku(puzzle)) {
+                                    return true;
+                                }
+                                puzzle[row][col] = 0;
+                            }
+                        }
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        // Function to display the Sudoku puzzle on the webpage
+        // Function to display the Sudoku puzzle on the webpage
+function displayBoard(puzzle, solved = false) {
+    const table = document.getElementById('sudoku-board');
+    table.innerHTML = '';
+    for (let i = 0; i < 9; i++) {
+        const row = document.createElement('tr');
+        for (let j = 0; j < 9; j++) {
+            const cell = document.createElement('td');
+            const value = puzzle[i][j];
+            const input = document.createElement('input');
+            input.setAttribute('type', 'number');
+            input.setAttribute('min', '1');
+            input.setAttribute('max', '9');
+            input.setAttribute('oninput', 'updateCell(this, ' + i + ', ' + j + ')');
+            if (value !== 0) {
+                cell.classList.add('given-number');
+                input.classList.add('given-number');
+                input.setAttribute('readonly', true); // Disable input for given values
+            }
+            if (solved && value !== 0) {
+                input.classList.add('solved-number');
+            }
+            input.value = value !== 0 ? value : '';
+            cell.appendChild(input);
+            row.appendChild(cell);
+        }
+        table.appendChild(row);
+    }
+}
+
+        // Function to update the value of a cell in the puzzle array
+        function updateCell(input, row, col) {
+            const value = parseInt(input.value);
+            if (!isNaN(value)) {
+                puzzle[row][col] = value;
+            } else {
+                puzzle[row][col] = 0;
+            }
+        }
+
+        // Function to validate the user's input before solving the puzzle
+        function validateAndSolve() {
+            const copyPuzzle = JSON.parse(JSON.stringify(puzzle));
+            if (validateInput(copyPuzzle)) {
+                solvePuzzle();
+            } else {
+                alert("Invalid input. Please check your entries and try again.");
+            }
+        }
+
+        // Function to validate the user's input
+        function validateInput(puzzle) {
+            for (let row = 0; row < 9; row++) {
+                for (let col = 0; col < 9; col++) {
+                    const num = puzzle[row][col];
+                    if (num !== 0) {
+                        puzzle[row][col] = 0;
+                        if (!isValid(puzzle, row, col, num)) {
+                            return false;
+                        }
+                        puzzle[row][col] = num;
+                    }
+                }
+            }
+            return true;
+        }
+
+        // Display a random Sudoku puzzle on page load
+        window.onload = generateNew;
+    </script>
+</body>
+</html>

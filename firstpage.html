@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Solver</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('6.jpg');
+            background-size: cover; /* Ensures the background image covers the entire viewport */
+            background-position: center; /* Centers the background image */
+            background-repeat: repeat; /* Prevents the background image from repeating */
+            height: 100vh; /* Makes sure the background image covers the entire viewport height */
+            margin: 0; /* Removes default margin */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Adds a semi-transparent white background to the container */
+            border-radius: 8px; /* Rounds the corners of the container */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow to the container */
+            max-width: 400px; /* Limits the maximum width of the container */
+        }
+        h1 {
+            color: #007bff; /* Changes the color of the heading */
+            margin-bottom: 20px; /* Adds space below the heading */
+        }
+        p {
+            color: #555; /* Changes the color of the paragraph text */
+            margin-bottom: 20px; /* Adds space below the paragraph */
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.3s ease; /* Adds a smooth transition effect */
+        }
+        .btn:hover {
+            background-color: #0056b3; /* Darkens the background color on hover */
+        }
+        .btn:focus {
+            outline: none; /* Removes the default focus outline */
+        }
+        a.btn {
+            text-decoration: none; /* Removes underline from the anchor elements */
+            display: inline-block;
+            margin-top: 20px; /* Adds space above the button */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Sudoku Solver</h1>
+        <p>Please sign in or create an account to start playing.</p>
+        <button class="btn" onclick="redirectToLogin()">Login</button>
+        <button class="btn" onclick="redirectToSignUp()">Sign Up</button>
+        <br><br>
+        <a href="themes.html" class="btn">choose theme</a>
+    </div>
+
+    <script>
+        function redirectToLogin() {
+            window.location.href = "loginpage.html";
+        }
+
+        function redirectToSignUp() {
+            window.location.href = "signuppage.html";
+        }
+    </script>
+</body>
+</html>

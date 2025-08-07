@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Sudoku Theme</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #007bff;
+        }
+        .theme-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .theme {
+            width: 250px;
+            margin: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+        .theme:hover {
+            transform: scale(1.05);
+        }
+        .theme img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 2px solid #fff; /* Add a white border at the bottom of the image */
+        }
+        .theme-content {
+            padding: 20px;
+        }
+        .theme-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .theme-description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Choose Sudoku Theme</h1>
+        <div class="theme-container">
+            <a href="sudoku.html" class="theme">
+                <img src="9.jpg" alt="Theme 1">
+                <div class="theme-content">
+                    <div class="theme-title">Classic Theme</div>
+                    <div class="theme-description">Enjoy the classic Sudoku experience with this timeless theme.</div>
+                </div>
+            </a>
+            <a href="puzzletheme.html" class="theme">
+                <img src="8.jpg" alt="Theme 2">
+                <div class="theme-content">
+                    <div class="theme-title">Puzzle Theme</div>
+                    <div class="theme-description">Challenge yourself with mind-bending puzzles in this intriguing theme.</div>
+                </div>
+            </a>
+            <a href="naturetheme.html" class="theme">
+                <img src="7.jpg" alt="Theme 2">
+                <div class="theme-content">
+                    <div class="theme-title">Nature Theme</div>
+                    <div class="theme-description">Connect with nature while solving Sudoku puzzles with this serene theme.</div>
+                </div>
+            </a>
+            
+            <!-- Add more theme options as needed -->
+        </div>
+    </div>
+</body>
+</html>
